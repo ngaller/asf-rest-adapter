@@ -24,11 +24,11 @@ module Authenticate
       # Initializes the adapter, using username, password. A good place to invoke
       # it includes 'setup()' method in the 'test_helper' and Rails init files.
       # usage ->     bootup_rest_adapter(username, password, api_version)
-      def bootup_rest_adapter(username, password, api_version)
+      def bootup_rest_adapter(username, password, api_version, login_svr=nil)
         p "*" * 80
         p 'Set up code'
 
-        login_svr = 'https://login.salesforce.com'
+        login_svr ||= 'https://login.salesforce.com'
         api_version = api_version ? api_version : '21.0'
 
         uri = URI.parse(login_svr)
@@ -80,7 +80,7 @@ module Authenticate
             puts "Password: " + password
             puts "API Version " + login_svr
 
-            security_token, rest_svr, rest_version = Salesforce::Rest::AsfRest.bootup_rest_adapter(username, password, api_version)
+            security_token, rest_svr, rest_version = Salesforce::Rest::AsfRest.bootup_rest_adapter(username, password, api_version, login_svr)
             
             puts 'Security Token: ' + security_token
             puts 'rest_svr: ' + rest_svr
